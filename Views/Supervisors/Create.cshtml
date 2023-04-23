@@ -2,41 +2,73 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Supervisors" asp-action="Index">Supervisors</a></li>
 
-<h1>Create</h1>
+                <li class="breadcrumb-item text-decoration-underline">Create new Supervisor</li>
+            </ol>
+        </nav>
+    </div>
+</nav>
+<h1>Create new Supervisor</h1>
 
-<h4>Supervisor</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <label asp-for="Phone" class="control-label"></label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-4">
+                <label asp-for="BirthDate" class="control-label">Birthday</label>
+                <input asp-for="BirthDate" class="form-control" type="date" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <label asp-for="Gender" class="control-label"></label>
+                @*<select asp-for="Gender" class="form-control"></select>*@
+                <select asp-for="Gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                    {
+                        <option value="@gender">@gender</option>
+                    }
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-5">
+                <input type="submit" value="Create" class="btn btn-success" style="width:200px" />
+                <a asp-action="Index" class="btn btn-info" style="width:200px">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

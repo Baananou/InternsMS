@@ -2,44 +2,56 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Create</h1>
-
-<h4>EvaluationSheet</h4>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="EvaluationSheets" asp-action="Index">Evaluation Sheets</a></li>
+                <li class="breadcrumb-item text-decoration-underline">Create new Evaluation Sheet</li>
+            </ol>
+        </nav>
+    </div>
+</nav>
+<h1>Create Evaluation Sheet</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="InternId" class="control-label"></label>
+            <div class="form-group mt-4">
+                <label asp-for="InternId" class="control-label">Pick Intern</label>
                 <select asp-for="InternId" class ="form-control" asp-items="ViewBag.InternId"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="AssignmentId" class="control-label"></label>
+            <div class="form-group mt-4">
+                <label asp-for="AssignmentId" class="control-label">Pick Assignment</label>
                 <select asp-for="AssignmentId" class ="form-control" asp-items="ViewBag.AssignmentId"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
+                <label asp-for="SupervisorId" class="control-label">Pick Supervisor</label>
+                <select asp-for="SupervisorId" class ="form-control" asp-items="ViewBag.SupervisorId"></select>
+            </div>
+            <div class="form-group mt-4">
                 <label asp-for="Score" class="control-label"></label>
                 <input asp-for="Score" class="form-control" />
                 <span asp-validation-for="Score" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <label asp-for="Comments" class="control-label"></label>
                 <input asp-for="Comments" class="form-control" />
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-4">
+                <input type="submit" value="Create" class="btn btn-success" style="width:200px" />
+                <a asp-action="Index" class="btn btn-info" style="width:200px">Back to List</a>
+
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

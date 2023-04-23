@@ -2,35 +2,63 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Details</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Supervisors" asp-action="Index">Supervisors</a></li>
+                <li class="breadcrumb-item text-decoration-underline">Details Supervisor @Model.Id</li>
+            </ol>
+        </nav>
+    </div>
+</nav>
 
 <div>
-    <h4>Supervisor</h4>
+    <h4>Supervisor @Model.Id</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 mt-4">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10 mt-4">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 mt-4">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10 mt-4">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 mt-4">
             @Html.DisplayNameFor(model => model.Phone)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10 mt-4">
             @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class = "col-sm-2 mt-4">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class = "col-sm-10 mt-4">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt class = "col-sm-2 mt-4">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10 mt-4">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class = "col-sm-2 mt-4">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10 mt-4">
+            @Html.DisplayFor(model => model.Address)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-success" style="width:200px">Edit</a>
+    <a asp-action="Index" class="btn btn-info" style="width:200px">Back to List</a>
 </div>

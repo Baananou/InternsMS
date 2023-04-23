@@ -4,6 +4,7 @@ using InternsMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternsMS.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230422120906_updatedmodel1")]
+    partial class updatedmodel1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace InternsMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InternId")
-                        .HasColumnType("int");
-
                     b.Property<int>("InternshipId")
                         .HasColumnType("int");
 
@@ -51,8 +51,6 @@ namespace InternsMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InternId");
 
                     b.HasIndex("InternshipId");
 
@@ -79,10 +77,7 @@ namespace InternsMS.Migrations
                     b.Property<int>("InternId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Score")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SupervisorId")
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -90,8 +85,6 @@ namespace InternsMS.Migrations
                     b.HasIndex("AssignmentId");
 
                     b.HasIndex("InternId");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("EvaluationSheets");
                 });
@@ -109,17 +102,15 @@ namespace InternsMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InternshipId")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -130,8 +121,6 @@ namespace InternsMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InternshipId");
 
                     b.ToTable("Interns");
                 });
@@ -158,16 +147,11 @@ namespace InternsMS.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("Internships");
                 });
@@ -180,19 +164,9 @@ namespace InternsMS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("date");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -411,12 +385,6 @@ namespace InternsMS.Migrations
 
             modelBuilder.Entity("InternsMS.Models.Assignment", b =>
                 {
-                    b.HasOne("InternsMS.Models.Intern", "Intern")
-                        .WithMany("Assignments")
-                        .HasForeignKey("InternId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("InternsMS.Models.Internship", "Internship")
                         .WithMany()
                         .HasForeignKey("InternshipId")
@@ -428,8 +396,6 @@ namespace InternsMS.Migrations
                         .HasForeignKey("SupervisorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Intern");
 
                     b.Navigation("Internship");
 
@@ -450,35 +416,9 @@ namespace InternsMS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("InternsMS.Models.Supervisor", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Assignment");
 
                     b.Navigation("Intern");
-
-                    b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Intern", b =>
-                {
-                    b.HasOne("InternsMS.Models.Internship", "Internship")
-                        .WithMany("Interns")
-                        .HasForeignKey("InternshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Internship");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Internship", b =>
-                {
-                    b.HasOne("InternsMS.Models.Supervisor", null)
-                        .WithMany("Internships")
-                        .HasForeignKey("SupervisorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -530,21 +470,6 @@ namespace InternsMS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Intern", b =>
-                {
-                    b.Navigation("Assignments");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Internship", b =>
-                {
-                    b.Navigation("Interns");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Supervisor", b =>
-                {
-                    b.Navigation("Internships");
                 });
 #pragma warning restore 612, 618
         }

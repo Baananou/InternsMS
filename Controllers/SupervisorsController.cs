@@ -56,7 +56,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone")] Supervisor supervisor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone,BirthDate,Gender,Address")] Supervisor supervisor)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Phone")] Supervisor supervisor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Phone,BirthDate,Gender,Address")] Supervisor supervisor)
         {
             if (id != supervisor.Id)
             {

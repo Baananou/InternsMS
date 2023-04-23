@@ -22,7 +22,7 @@ namespace InternsMS.Controllers
         // GET: EvaluationSheets
         public async Task<IActionResult> Index()
         {
-            var internshipDbContext = _context.EvaluationSheets.Include(e => e.Assignment).Include(e => e.Intern);
+            var internshipDbContext = _context.EvaluationSheets.Include(e => e.Assignment).Include(e => e.Intern).Include(e => e.Supervisor);
             return View(await internshipDbContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace InternsMS.Controllers
             var evaluationSheet = await _context.EvaluationSheets
                 .Include(e => e.Assignment)
                 .Include(e => e.Intern)
+                .Include(e => e.Supervisor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (evaluationSheet == null)
             {
@@ -49,8 +50,9 @@ namespace InternsMS.Controllers
         // GET: EvaluationSheets/Create
         public IActionResult Create()
         {
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Description");
-            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Address");
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Title");
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name");
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name");
             return View();
         }
 
@@ -59,16 +61,17 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,InternId,AssignmentId,Score,Comments")] EvaluationSheet evaluationSheet)
+        public async Task<IActionResult> Create([Bind("Id,InternId,AssignmentId,SupervisorId,Score,Comments")] EvaluationSheet evaluationSheet)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(evaluationSheet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Description", evaluationSheet.AssignmentId);
-            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Address", evaluationSheet.InternId);
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Title", evaluationSheet.AssignmentId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", evaluationSheet.InternId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", evaluationSheet.SupervisorId);
             return View(evaluationSheet);
         }
 
@@ -85,8 +88,9 @@ namespace InternsMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Description", evaluationSheet.AssignmentId);
-            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Address", evaluationSheet.InternId);
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Title", evaluationSheet.AssignmentId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", evaluationSheet.InternId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", evaluationSheet.SupervisorId);
             return View(evaluationSheet);
         }
 
@@ -95,7 +99,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,InternId,AssignmentId,Score,Comments")] EvaluationSheet evaluationSheet)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,InternId,AssignmentId,SupervisorId,Score,Comments")] EvaluationSheet evaluationSheet)
         {
             if (id != evaluationSheet.Id)
             {
@@ -122,8 +126,9 @@ namespace InternsMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Description", evaluationSheet.AssignmentId);
-            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Address", evaluationSheet.InternId);
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "Id", "Title", evaluationSheet.AssignmentId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", evaluationSheet.InternId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", evaluationSheet.SupervisorId);
             return View(evaluationSheet);
         }
 
@@ -138,6 +143,7 @@ namespace InternsMS.Controllers
             var evaluationSheet = await _context.EvaluationSheets
                 .Include(e => e.Assignment)
                 .Include(e => e.Intern)
+                .Include(e => e.Supervisor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (evaluationSheet == null)
             {

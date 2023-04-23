@@ -14,11 +14,12 @@ namespace InternsMS.Models
 		public DateTime Deadline { get; set; }
 		[Required]
 		public int InternshipId { get; set; }
-		[Required]
-		public Internship Internship { get; set; }
+		public Internship? Internship { get; set; }
 		[Required]
 		public int SupervisorId { get; set; }
-		[Required]
-		public Supervisor Supervisor { get; set; }
-	}
+		public Supervisor? Supervisor { get; set; }
+        [Required]
+        public int InternId { get; set; }
+        public Intern? Intern { get; set; }
+    }
 }

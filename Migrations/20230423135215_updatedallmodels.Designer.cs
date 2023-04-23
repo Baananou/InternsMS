@@ -4,6 +4,7 @@ using InternsMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternsMS.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230423135215_updatedallmodels")]
+    partial class updatedallmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace InternsMS.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("InternInternship", b =>
+                {
+                    b.Property<int>("InternsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InternshipsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InternsId", "InternshipsId");
+
+                    b.HasIndex("InternshipsId");
+
+                    b.ToTable("InternInternship");
+                });
 
             modelBuilder.Entity("InternsMS.Models.Assignment", b =>
                 {
@@ -118,9 +136,6 @@ namespace InternsMS.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("InternshipId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -130,8 +145,6 @@ namespace InternsMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InternshipId");
 
                     b.ToTable("Interns");
                 });
@@ -409,6 +422,21 @@ namespace InternsMS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("InternInternship", b =>
+                {
+                    b.HasOne("InternsMS.Models.Intern", null)
+                        .WithMany()
+                        .HasForeignKey("InternsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InternsMS.Models.Internship", null)
+                        .WithMany()
+                        .HasForeignKey("InternshipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("InternsMS.Models.Assignment", b =>
                 {
                     b.HasOne("InternsMS.Models.Intern", "Intern")
@@ -461,17 +489,6 @@ namespace InternsMS.Migrations
                     b.Navigation("Intern");
 
                     b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Intern", b =>
-                {
-                    b.HasOne("InternsMS.Models.Internship", "Internship")
-                        .WithMany("Interns")
-                        .HasForeignKey("InternshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Internship");
                 });
 
             modelBuilder.Entity("InternsMS.Models.Internship", b =>
@@ -535,11 +552,6 @@ namespace InternsMS.Migrations
             modelBuilder.Entity("InternsMS.Models.Intern", b =>
                 {
                     b.Navigation("Assignments");
-                });
-
-            modelBuilder.Entity("InternsMS.Models.Internship", b =>
-                {
-                    b.Navigation("Interns");
                 });
 
             modelBuilder.Entity("InternsMS.Models.Supervisor", b =>

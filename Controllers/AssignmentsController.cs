@@ -22,7 +22,7 @@ namespace InternsMS.Controllers
         // GET: Assignments
         public async Task<IActionResult> Index()
         {
-            var internshipDbContext = _context.Assignments.Include(a => a.Internship).Include(a => a.Supervisor);
+            var internshipDbContext = _context.Assignments.Include(a => a.Intern).Include(a => a.Internship).Include(a => a.Supervisor);
             return View(await internshipDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace InternsMS.Controllers
             }
 
             var assignment = await _context.Assignments
+                .Include(a => a.Intern)
                 .Include(a => a.Internship)
                 .Include(a => a.Supervisor)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +50,9 @@ namespace InternsMS.Controllers
         // GET: Assignments/Create
         public IActionResult Create()
         {
-            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Description");
-            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Email");
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name");
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title");
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name");
             return View();
         }
 
@@ -59,16 +61,17 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Deadline,InternshipId,SupervisorId")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Deadline,InternshipId,SupervisorId,InternId")] Assignment assignment)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(assignment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Description", assignment.InternshipId);
-            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Email", assignment.SupervisorId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", assignment.InternId);
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", assignment.InternshipId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", assignment.SupervisorId);
             return View(assignment);
         }
 
@@ -85,8 +88,9 @@ namespace InternsMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Description", assignment.InternshipId);
-            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Email", assignment.SupervisorId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", assignment.InternId);
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", assignment.InternshipId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", assignment.SupervisorId);
             return View(assignment);
         }
 
@@ -95,7 +99,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Deadline,InternshipId,SupervisorId")] Assignment assignment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Deadline,InternshipId,SupervisorId,InternId")] Assignment assignment)
         {
             if (id != assignment.Id)
             {
@@ -122,8 +126,9 @@ namespace InternsMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Description", assignment.InternshipId);
-            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Email", assignment.SupervisorId);
+            ViewData["InternId"] = new SelectList(_context.Interns, "Id", "Name", assignment.InternId);
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", assignment.InternshipId);
+            ViewData["SupervisorId"] = new SelectList(_context.Supervisors, "Id", "Name", assignment.SupervisorId);
             return View(assignment);
         }
 
@@ -136,6 +141,7 @@ namespace InternsMS.Controllers
             }
 
             var assignment = await _context.Assignments
+                .Include(a => a.Intern)
                 .Include(a => a.Internship)
                 .Include(a => a.Supervisor)
                 .FirstOrDefaultAsync(m => m.Id == id);

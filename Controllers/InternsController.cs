@@ -22,9 +22,8 @@ namespace InternsMS.Controllers
         // GET: Interns
         public async Task<IActionResult> Index()
         {
-              return _context.Interns != null ? 
-                          View(await _context.Interns.ToListAsync()) :
-                          Problem("Entity set 'InternshipDbContext.Interns'  is null.");
+            var internshipDbContext = _context.Interns.Include(i => i.Internship);
+            return View(await internshipDbContext.ToListAsync());
         }
 
         // GET: Interns/Details/5
@@ -36,6 +35,7 @@ namespace InternsMS.Controllers
             }
 
             var intern = await _context.Interns
+                .Include(i => i.Internship)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (intern == null)
             {
@@ -48,6 +48,7 @@ namespace InternsMS.Controllers
         // GET: Interns/Create
         public IActionResult Create()
         {
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone,BirthDate,Gender,Address")] Intern intern)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone,BirthDate,Gender,Address,InternshipId")] Intern intern)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,7 @@ namespace InternsMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", intern.InternshipId);
             return View(intern);
         }
 
@@ -80,6 +82,7 @@ namespace InternsMS.Controllers
             {
                 return NotFound();
             }
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", intern.InternshipId);
             return View(intern);
         }
 
@@ -88,7 +91,7 @@ namespace InternsMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Phone,BirthDate,Gender,Address")] Intern intern)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Phone,BirthDate,Gender,Address,InternshipId")] Intern intern)
         {
             if (id != intern.Id)
             {
@@ -115,6 +118,7 @@ namespace InternsMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["InternshipId"] = new SelectList(_context.Internships, "Id", "Title", intern.InternshipId);
             return View(intern);
         }
 
@@ -127,6 +131,7 @@ namespace InternsMS.Controllers
             }
 
             var intern = await _context.Interns
+                .Include(i => i.Internship)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (intern == null)
             {
