@@ -10,7 +10,8 @@ builder.Services.AddDbContext<InternshipDbContext>(options => options.UseSqlServ
 	builder.Configuration.GetConnectionString("DefaultConnection")
 	));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders()
+	.AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<InternshipDbContext>();
 
 var app = builder.Build();

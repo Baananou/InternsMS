@@ -15,6 +15,8 @@ namespace InternsMS.Data
 		public DbSet<Internship> Internships { get; set; }
 		public DbSet<Assignment> Assignments { get; set; }
 		public DbSet<EvaluationSheet> EvaluationSheets { get; set; }
-	}
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+    }
 
 }

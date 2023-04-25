@@ -11,11 +11,13 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
                      alt="Skyscrapers" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </h5>
+@*                    <p class="card-text">
                         This is a wider card with supporting text below as a natural lead-in to
                         additional content. This content is a little bit longer.
-                    </p>
+                    </p>*@
                 </div>
                 <div class="card-footer">
                     @*<small class="text-muted">Last updated 3 mins ago</small>*@
@@ -27,14 +29,18 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
                      alt="Skyscrapers" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Assignments" asp-action="Index">Assignments</a>
+                    </h5>
+@*                    <p class="card-text">
                         This is a wider card with supporting text below as a natural lead-in to
                         additional content. This content is a little bit longer.
-                    </p>
+                    </p>*@
                 </div>
                 <div class="card-footer">
-                    @*<small class="text-muted">Last updated 3 mins ago</small>*@
+                    <a asp-area="" asp-controller="Assignments" asp-action="Create" class="btn btn-primary mt-3">Create New Assignment</a>
+                    <a class="btn btn-primary mt-3" asp-area="" asp-controller="Assignments" asp-action="Index">See All</a>
+
                 </div>
             </div>
         </div>
@@ -43,13 +49,16 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp" class="card-img-top"
                      alt="Los Angeles Skyscrapers" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Interns" asp-action="Index">Interns</a>
+                    </h5>
+@*                    <p class="card-text">
                         This card has supporting text below as a natural lead-in to additional content.
-                    </p>
+                    </p>*@
                 </div>
                 <div class="card-footer">
-                    @*<small class="text-muted">Last updated 3 mins ago</small>*@
+                    <a asp-area="" asp-controller="Interns" asp-action="Create" class="btn btn-primary mt-3">Create New Intern</a>
+                    <a class="btn btn-primary mt-3" asp-area="" asp-controller="Interns" asp-action="Index">See All</a>
                 </div>
             </div>
         </div>
@@ -58,15 +67,18 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
                      alt="Palm Springs Road" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Supervisors" asp-action="Index">Supervisors</a>
+                    </h5>
+@*                    <p class="card-text">
                         This is a wider card with supporting text below as a natural lead-in to
                         additional content. This card has even longer content than the first to show
                         that equal height action.
-                    </p>
+                    </p>*@
                 </div>
                 <div class="card-footer">
-                    @*<small class="text-muted">Last updated 3 mins ago</small>*@
+                    <a asp-area="" asp-controller="Supervisors" asp-action="Create" class="btn btn-primary mt-3">Create New Supervisor</a>
+                    <a class="btn btn-primary mt-3" asp-area="" asp-controller="Supervisors" asp-action="Index">See All</a>
                 </div>
             </div>
         </div>
@@ -75,15 +87,18 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
                 alt="Palm Springs Road" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Internships" asp-action="Index">Internships</a>
+                    </h5>
+@*                    <p class="card-text">
                         This is a wider card with supporting text below as a natural lead-in to
                         additional content. This card has even longer content than the first to show
                         that equal height action.
-                    </p>
+                    </p>*@
                 </div>
                 <div class="card-footer">
-                    @*<small class="text-muted">Last updated 3 mins ago</small>*@
+                    <a asp-area="" asp-controller="Internships" asp-action="Create" class="btn btn-primary mt-3">Create New Internship</a>
+                    <a class="btn btn-primary mt-3" asp-area="" asp-controller="Internships" asp-action="Index">See All</a>
                 </div>
             </div>
         </div>
@@ -92,20 +107,21 @@
                 @*<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
                 alt="Palm Springs Road" />*@
                 <div class="card-body">
-                    <h5 class="card-title">Profile Settings</h5>
-                    <p class="card-text">
-                        
-                    </p>
+                    <h5 class="card-title">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="EvaluationSheets" asp-action="Index">Evaluation Sheet</a>
+                    </h5>
+                    @*                    <p class="card-text">
+                    This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This card has even longer content than the first to show
+                    that equal height action.
+                    </p>*@
                 </div>
                 <div class="card-footer">
-                    @*<small class="text-muted">Last updated 3 mins ago</small>*@
-                    <div class="container">
-
-                    </div>
+                    <a asp-area="" asp-controller="EvaluationSheets" asp-action="Create" class="btn btn-primary mt-3">Create New Evaluation Sheet</a>
+                    <a class="btn btn-primary mt-3" asp-area="" asp-controller="EvaluationSheets" asp-action="Index">See All</a>
                 </div>
             </div>
         </div>
-    </div>
-
+        
     <p class="mt-5">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
